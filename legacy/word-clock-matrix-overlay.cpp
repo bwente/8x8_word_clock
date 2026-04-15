@@ -1,5 +1,12 @@
 #include "wled.h"
 
+/*
+ * Legacy overlay-based word clock implementation.
+ *
+ * This is preserved as a reference for the earlier rendering approach that
+ * painted a per-pixel mask in handleOverlayDraw(). The canonical WLED usermod
+ * for this repo now lives in ../usermod_word_clock_matrix.h.
+ */
 class WordClockMatrix : public Usermod {
 private:
   int  lastMinute     = -1;
@@ -174,7 +181,7 @@ public:
     // Always use segment 0's primary color
     uint32_t col = 0xFFFFFF;
     if (strip.getSegmentsNum() > 0) {
-      auto &seg0 = strip.getSegment(0);
+      auto& seg0 = strip.getSegment(0);
       col = seg0.colors[0];
     }
 
@@ -183,21 +190,21 @@ public:
     }
   }
 
-  void addToConfig(JsonObject &root) override {
+  void addToConfig(JsonObject& root) override {
     JsonObject obj = root[F("wordclock")];
     if (!obj) obj = root.createNestedObject(F("wordclock"));
-    obj[F("active")]        = usermodActive;
-    obj[F("displayItIs")]   = displayItIs;
-    obj[F("dayBrightness")] = dayBrightness;
+    obj[F("active")]          = usermodActive;
+    obj[F("displayItIs")]     = displayItIs;
+    obj[F("dayBrightness")]   = dayBrightness;
     obj[F("nightBrightness")] = nightBrightness;
-    obj[F("ledOffset")]     = ledOffset;
+    obj[F("ledOffset")]       = ledOffset;
   }
 
-  bool readFromConfig(JsonObject &root) override {
+  bool readFromConfig(JsonObject& root) override {
     JsonObject obj = root[F("wordclock")];
     if (!obj) return false;
-    if (obj.containsKey(F("active")))        usermodActive   = obj[F("active")].as<bool>();
-    if (obj.containsKey(F("displayItIs")))    displayItIs     = obj[F("displayItIs")].as<bool>();
+    if (obj.containsKey(F("active"))) usermodActive = obj[F("active")].as<bool>();
+    if (obj.containsKey(F("displayItIs"))) displayItIs = obj[F("displayItIs")].as<bool>();
     if (obj.containsKey(F("dayBrightness"))) {
       uint16_t v = obj[F("dayBrightness")].as<uint16_t>();
       if (v <= 255) dayBrightness = (uint8_t)v;
