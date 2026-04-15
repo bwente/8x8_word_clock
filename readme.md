@@ -14,7 +14,7 @@ By [@bwente](https://github.com/bwente)
 ## Hardware Guide
 
 See the full build tutorial on Hackster.io:  
-👉 **https://www.hackster.io/bwente/word-clock-with-just-two-components-073834**
+https://www.hackster.io/bwente/word-clock-with-just-two-components-073834
 
 ## Installation
 
@@ -27,9 +27,15 @@ See the full build tutorial on Hackster.io:
 | File | Description |
 |------|-------------|
 | `usermod_word_clock_matrix.h` | Main usermod code |
-| `word-clock-matrix.cpp` | Usermod registration |
+| `legacy/word-clock-matrix-overlay.cpp` | Preserved legacy overlay-based implementation |
 | `word clock stencil.svg` | Laser cut stencil template |
 | `Word Clock Baffle.stl` | 3D printable light baffle |
+
+## Notes
+
+- The header-based `usermod_word_clock_matrix.h` implementation is the main WLED usermod for this repo.
+- The older overlay-based renderer is preserved under `legacy/` for reference and comparison.
+- If you use the preset-based options, point them at existing WLED presets in your installation.
 
 ## Images
 
